@@ -1,6 +1,6 @@
 import os
-from RL_Project import agents
-from RL_Project.tictactoe import tictactoe
+from main import agents
+from main.tictactoe import tictactoe
 
 if __name__ == '__main__':
     os.system('clear')
