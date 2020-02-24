@@ -1,12 +1,14 @@
 import numpy as np
+from tqdm import tqdm
 
 
 class TicTacToe:
-    def __init__(self, player_1, player_2):
+    def __init__(self, player_1, player_2, nb_games):
         self.board = np.zeros((3, 3))
         self.endgame = False
         self.player_1 = player_1
         self.player_2 = player_2
+        self.nb_games = nb_games
 
     def get_available_positions(self):
         available_positions = np.where(self.board == 0)
@@ -75,9 +77,17 @@ class TicTacToe:
             print(out)
         print('-------------')
 
-    def play(self, games=100):
-        for game in range(games):
-            print(f'Game number:{game}')
+    def display_results(self, win, tie, loose):
+        print('-----------------------------------------')
+        print(
+            f'|Player 1: {self.player_1.__class__.__name__} | {win} | {tie} | {loose}|')
+        print(
+            f'|Player 2: {self.player_2.__class__.__name__} | {loose} | {tie} | {win}|')
+        print('-----------------------------------------')
+
+    def play(self):
+        win, tie, loose = 0, 0, 0
+        for _ in tqdm(range(self.nb_games)):
             player_1_win_or_draw = None
             player_2_win_or_draw = None
             while not self.endgame:
@@ -88,8 +98,9 @@ class TicTacToe:
                 # Add board configuration to player's states
                 self.player_1.states.append(self.board_to_text())
                 # Check if player 1 won with this move
-                player_1_win_or_draw = self.check_win(player_1, player_1_action)
-                self.display_board()
+                player_1_win_or_draw = self.check_win(
+                    player_1, player_1_action)
+
                 if player_1_win_or_draw in (0, 1):
                     self.give_reward(player_1_win_or_draw)
                     self.player_1.clear_states()
@@ -106,16 +117,19 @@ class TicTacToe:
                     # Check if player 2 won with this move
                     player_2_win_or_draw = self.check_win(
                         player_2, player_2_action)
-                    self.display_board()
+
                     if player_2_win_or_draw in (0, -1):
                         self.give_reward(player_2_win_or_draw)
                         self.player_2.clear_states()
                         self.player_2.clear_states()
                         self.clear_board()
                         break
+
             if player_1_win_or_draw == 0 or player_2_win_or_draw == 0:
-                print("It's a draw!")
+                tie += 1
             elif player_1_win_or_draw:
-                print("Player 1 won")
+                win += 1
             else:
-                print("Player 2 won")
+                loose += 1
+
+        self.display_results(win, tie, loose)
