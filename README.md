@@ -8,5 +8,5 @@ We used the _AlphaZero_ algorithm to make a bot that plays tic-tac-toe. The file
 
 To launch the program, open a terminal and run from the root directory
 ```
-$ python -m main
+python -m main
 ```
