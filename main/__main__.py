@@ -7,7 +7,7 @@ if __name__ == '__main__':
     while True:
         try:
             value = int(input(
-                '''Welcome to the TicTacToe RL game! Choose your agent:
+                '''Welcome to the tic-tac-toe RL game! Choose your agent:
                 \t - 0 to train the epsilon-greedy algorithm (epsilon-greedy player VS epsilon-greedy player)
                 \n'''
             ))

@@ -114,8 +114,8 @@ class TicTacToe:
                         self.clear_board()
                         break
             if player_1_win_or_draw == 0 or player_2_win_or_draw == 0:
-                print("It's a draw !")
+                print("It's a draw!")
             elif player_1_win_or_draw:
-                print('Player 1 won')
+                print("Player 1 won")
             else:
-                print('Player 2 won')
+                print("Player 2 won")
