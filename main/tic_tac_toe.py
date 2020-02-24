@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class tictactoe():
+class TicTacToe:
     def __init__(self, player_1, player_2):
         self.board = np.zeros((3, 3))
         self.endgame = False
@@ -16,19 +16,17 @@ class tictactoe():
         self.board[position] = player
 
     def check_win(self, player, position):
-        # Check column
+        # Check column win
         abs_sum = abs(sum([self.board[row, position[1]] for row in range(3)]))
         if abs_sum == 3:
             self.endgame = True
             return player
-
-        # Check row
+        # Check row win
         abs_sum = abs(sum([self.board[position[0], col] for col in range(3)]))
         if abs_sum == 3:
             self.endgame = True
             return player
-
-        # Check diag if position in a diag
+        # Check diagonal win if last played position was in a diagonal
         if position[0] == position[1]:
             abs_sum = abs(sum([self.board[i, i] for i in range(3)]))
             if abs_sum == 3:
@@ -39,8 +37,8 @@ class tictactoe():
             if abs_sum == 3:
                 self.endgame = True
                 return player
-        # Check tie
-        if (len(self.get_available_positions()) == 0):
+        # Check draw
+        if len(self.get_available_positions()) == 0:
             self.endgame = True
             return 0
 
@@ -69,9 +67,9 @@ class tictactoe():
             for j in range(0, 3):
                 if self.board[i, j] == 1:
                     token = 'x'
-                if self.board[i, j] == -1:
+                elif self.board[i, j] == -1:
                     token = 'o'
-                if self.board[i, j] == 0:
+                else:
                     token = ' '
                 out += token + ' | '
             print(out)
@@ -80,7 +78,8 @@ class tictactoe():
     def play(self, games=100):
         for game in range(games):
             print(f'Game number:{game}')
-
+            player_1_win_or_draw = None
+            player_2_win_or_draw = None
             while not self.endgame:
                 # Player 1 plays
                 player_1 = self.player_1.name
@@ -89,11 +88,10 @@ class tictactoe():
                 # Add board configuration to player's states
                 self.player_1.states.append(self.board_to_text())
                 # Check if player 1 won with this move
-                player_1_win_or_tie = self.check_win(player_1, player_1_action)
+                player_1_win_or_draw = self.check_win(player_1, player_1_action)
                 self.display_board()
-
-                if player_1_win_or_tie in (0, 1):
-                    self.give_reward(player_1_win_or_tie)
+                if player_1_win_or_draw in (0, 1):
+                    self.give_reward(player_1_win_or_draw)
                     self.player_1.clear_states()
                     self.player_2.clear_states()
                     self.clear_board()
@@ -106,19 +104,18 @@ class tictactoe():
                     # Add board configuration to player's states
                     self.player_2.states.append(self.board_to_text())
                     # Check if player 2 won with this move
-                    player_2_win_or_tie = self.check_win(
+                    player_2_win_or_draw = self.check_win(
                         player_2, player_2_action)
                     self.display_board()
-
-                    if player_2_win_or_tie in (0, -1):
-                        self.give_reward(player_2_win_or_tie)
+                    if player_2_win_or_draw in (0, -1):
+                        self.give_reward(player_2_win_or_draw)
                         self.player_2.clear_states()
                         self.player_2.clear_states()
                         self.clear_board()
                         break
-            if player_1_win_or_tie == 0 or player_2_win_or_tie == 0:
-                print("It's a tie !")
-            elif player_1_win_or_tie:
-                print('Player 1 won')
+            if player_1_win_or_draw == 0 or player_2_win_or_draw == 0:
+                print("It's a draw!")
+            elif player_1_win_or_draw:
+                print("Player 1 won")
             else:
-                print('Player 2 won')
+                print("Player 2 won")

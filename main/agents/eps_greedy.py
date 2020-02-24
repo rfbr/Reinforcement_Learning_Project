@@ -1,7 +1,9 @@
 import numpy as np
 import random
 from copy import deepcopy
-class eps_greedy_agent():
+
+
+class EpsGreedyAgent:
     def __init__(self, name, epsilon):
         self.name = name
         self.epsilon = epsilon
@@ -12,11 +14,11 @@ class eps_greedy_agent():
 
     def action(self, board):
         positions = board.get_available_positions()
-
         if np.random.rand() <= self.epsilon:
             action = random.choice(positions)
         else:
             max_value = np.NINF
+            action = None
             for position in positions:
                 next_move = deepcopy(board)
                 next_move.board[position] = self.name
