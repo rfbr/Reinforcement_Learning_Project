@@ -103,39 +103,6 @@ class TicTacToe:
         win, draw, loss=0, 0, 0
         for _ in tqdm(range(self.nb_games)):
             while True:
-                # # Player 1 plays
-                # player_1 = self.player_1.name
-                # player_1_action = self.player_1.action(self)
-                # self.update_board(player_1, player_1_action)
-                # # Add board configuration to player's states
-                # self.player_1.states.append(self.board_to_text())
-                # # Check if player 1 won with this move
-                # player_1_win_or_draw = self.check_win(player_1,
-                #                                       player_1_action)
-
-                # if player_1_win_or_draw in (0, 1):
-                #     self.give_reward(player_1_win_or_draw)
-                #     self.player_1.clear_states()
-                #     self.player_2.clear_states()
-                #     self.clear_board()
-                #     break
-                # else:
-                #     # Player 2 plays
-                #     player_2 = self.player_2.name
-                #     player_2_action = self.player_2.action(self)
-                #     self.update_board(player_2, player_2_action)
-                #     # Add board configuration to player's states
-                #     self.player_2.states.append(self.board_to_text())
-                #     # Check if player 2 won with this move
-                #     player_2_win_or_draw = self.check_win(
-                #         player_2, player_2_action)
-
-                #     if player_2_win_or_draw in (0, -1):
-                #         self.give_reward(player_2_win_or_draw)
-                #         self.player_2.clear_states()
-                #         self.player_2.clear_states()
-                #         self.clear_board()
-                #         break
                 player=self.player_1 if np.random.rand(
                 ) < .5 else self.player_2
                 result=self.play(player)
