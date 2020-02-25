@@ -56,7 +56,7 @@ class TicTacToe:
 
     def clear_board(self):
         self.board = np.zeros((3, 3))
-        
+
     def display_board(self):
         for i in range(0, 3):
             print('-------------')
@@ -72,21 +72,25 @@ class TicTacToe:
             print(out)
         print('-------------')
 
-    def display_results(self, win, tie, loose):
-        print('-----------------------------------------')
+    def display_results(self, win, tie, loss):
+        n = max(len(f'|Player 1: {self.player_1.__class__.__name__} |'+f'{win}'+' '*(10-len(str(win)))+'|'+f'{tie}'+' '*(10-len(str(tie)))+'|'+f'{loss}'+' '*(10-len(str(loss)))+'|'),\
+             len(f'|Player 2: {self.player_2.__class__.__name__} |'+f'{win}'+' '*(10-len(str(win)))+'|'+f'{tie}'+' '*(10-len(str(tie)))+'|'+f'{loss}'+' '*(10-len(str(loss)))+'|'))
+        print('-'*n)
+        print('|Agent     ' + ' '*max(len(self.player_1.__class__.__name__),len(self.player_2.__class__.__name__)) + ' |Win       |Draw      |Loss      |')
+        print('-'*n)
         print(
-            f'|Player 1: {self.player_1.__class__.__name__} | {win} | {tie} | {loose}|'
+            f'|Player 1: {self.player_1.__class__.__name__} |'+f'{win}'+' '*(10-len(str(win)))+'|'+f'{tie}'+' '*(10-len(str(tie)))+'|'+f'{loss}'+' '*(10-len(str(loss)))+'|'
         )
+        print('-'*n)
         print(
-            f'|Player 2: {self.player_2.__class__.__name__} | {loose} | {tie} | {win}|'
+            f'|Player 2: {self.player_2.__class__.__name__} |'+f'{loss}'+' '*(10-len(str(loss)))+'|'+f'{tie}'+' '*(10-len(str(tie)))+'|'+f'{win}'+' '*(10-len(str(win)))+'|'
         )
-        print('-----------------------------------------')
-
+        print('-'*n)
     def play(self, player):
-        action = player.action(self)
+        action=player.action(self)
         self.update_board(player.name, action)
         player.states.append(self.board_to_text())
-        win_or_draw = self.check_win(player.name, action)
+        win_or_draw=self.check_win(player.name, action)
         if abs(win_or_draw) in (0, 1):
             self.give_reward(win_or_draw)
             self.player_1.clear_states()
@@ -96,7 +100,7 @@ class TicTacToe:
         return None
 
     def simulation(self):
-        win, draw, lose = 0, 0, 0
+        win, draw, loss=0, 0, 0
         for _ in tqdm(range(self.nb_games)):
             while True:
                 # # Player 1 plays
@@ -132,9 +136,9 @@ class TicTacToe:
                 #         self.player_2.clear_states()
                 #         self.clear_board()
                 #         break
-                player = self.player_1 if np.random.rand(
+                player=self.player_1 if np.random.rand(
                 ) < .5 else self.player_2
-                result = self.play(player)
+                result=self.play(player)
                 if result == 1:
                     win += 1
                     break
@@ -142,6 +146,6 @@ class TicTacToe:
                     draw += 1
                     break
                 elif result == -1:
-                    lose += 1
+                    loss += 1
                     break
-        self.display_results(win, draw, lose)
+        self.display_results(win, draw, loss)
