@@ -82,18 +82,18 @@ if __name__ == '__main__':
                     else:
                         break
                 except ValueError:
-                    print('Oops wrong input !')
+                    print('Oops wrong input!')
         except ValueError:
             print("Invalid input :'( Try again")
         environment = TicTacToe(players[1], players[2])
         print("Training in progress...")
         try:
-            players[1].load_policy(policy_1_name)
-            players[2].load_policy(policy_2_name)
+            players[1].load_policy("main/policies/" + policy_1_name)
+            players[2].load_policy("main/policies/" + policy_2_name)
         except (OSError, IOError) as e:
             environment.train(10000)
-            players[1].save_policy(policy_1_name)
-            players[2].save_policy(policy_2_name)
+            players[1].save_policy("main/policies/" + policy_1_name)
+            players[2].save_policy("main/policies/" + policy_2_name)
         print("Playing games...")
         environment.simulation(nb_games)
         break
