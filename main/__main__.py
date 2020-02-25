@@ -8,16 +8,14 @@ if __name__ == '__main__':
     while True:
         try:
             print('Welcome to the tic-tac-toe RL game!')
-            player_1_value = int(input(
-                ''' Choose player 1 agent:
+            player_1_value = int(
+                input(''' Choose player 1 agent:
         - 0 to play with the epsilon-greedy algorithm
-                \n'''
-            ))
-            player_2_value = int(input(
-                '''Choose player 2 agent:
+                \n'''))
+            player_2_value = int(
+                input('''Choose player 2 agent:
         - 0 to play with the epsilon-greedy algorithm
-                \n'''
-            ))
+                \n'''))
             if player_1_value == 0:
                 os.system('clear')
                 while True:
@@ -62,6 +60,6 @@ if __name__ == '__main__':
             print("Invalid input :'( Try again")
 
         environment = TicTacToe(players[1], players[2], nb_games)
-        environment.play()
+        environment.simulation()
 
         break
