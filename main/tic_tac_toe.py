@@ -3,11 +3,10 @@ from tqdm import tqdm
 
 
 class TicTacToe:
-    def __init__(self, player_1, player_2, nb_games):
+    def __init__(self, player_1, player_2):
         self.board = np.zeros((3, 3))
         self.player_1 = player_1
         self.player_2 = player_2
-        self.nb_games = nb_games
 
     def get_available_positions(self):
         available_positions = np.where(self.board == 0)
@@ -102,12 +101,16 @@ class TicTacToe:
             return win_or_draw
         return None
 
-    def simulation(self):
+    def train(self, nb_games):
+        for _ in tqdm(range(nb_games)):
+            player = self.player_1 if np.random.rand() < .5 else self.player_2
+            self.play(player)
+
+    def simulation(self, nb_games):
         win, draw, loss = 0, 0, 0
-        for _ in tqdm(range(self.nb_games)):
+        for _ in tqdm(range(nb_games)):
             while True:
-                player = self.player_1 if np.random.rand(
-                ) < .5 else self.player_2
+                player = self.player_1 if np.random.rand() < .5 else self.player_2
                 result = self.play(player)
                 if result == 1:
                     win += 1

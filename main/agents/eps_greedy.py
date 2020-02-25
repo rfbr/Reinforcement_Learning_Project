@@ -1,6 +1,7 @@
 import numpy as np
 import random
 from copy import deepcopy
+import pickle
 
 
 class EpsGreedyAgent:
@@ -42,3 +43,13 @@ class EpsGreedyAgent:
 
     def clear_states(self):
         self.states = []
+
+    def save_policy(self, file):
+        fw = open(file, 'wb')
+        pickle.dump(self.board_values, fw)
+        fw.close()
+
+    def load_policy(self, file):
+        fr = open(file, 'rb')
+        self.board_values = pickle.load(fr)
+        fr.close()
