@@ -104,8 +104,25 @@ class TicTacToe:
 
     def train(self, nb_games):
         for _ in tqdm(range(nb_games)):
-            player = self.player_1 if np.random.rand() < .5 else self.player_2
-            self.play(player)
+            first_player = 0
+            while True:
+                if first_player ==0:
+                        player = self.player_1 if np.random.rand() < .5 else self.player_2
+                        first_player = player
+    
+                else:
+                    if first_player == self.player_1:
+                        player = self.player_2
+                        first_player = player
+    
+                    elif first_player == self.player_2:
+                        player = self.player_1
+                        first_player = player
+    
+                result = self.play(player)
+                if result in [0,1,-1]:
+                    break
+            
 
     def simulation(self, nb_games):
         win, draw, loss = 0, 0, 0
