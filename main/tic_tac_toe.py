@@ -93,6 +93,7 @@ class TicTacToe:
         self.update_board(player.name, action)
         player.states.append(self.board_to_text())
         win_or_draw = self.check_win(player.name, action)
+        self.display_board()
         if abs(win_or_draw) in (0, 1):
             self.give_reward(win_or_draw)
             self.player_1.clear_states()
@@ -109,8 +110,21 @@ class TicTacToe:
     def simulation(self, nb_games):
         win, draw, loss = 0, 0, 0
         for _ in tqdm(range(nb_games)):
+            first_player = 0 
             while True:
-                player = self.player_1 if np.random.rand() < .5 else self.player_2
+                if first_player ==0:
+                    player = self.player_1 if np.random.rand() < .5 else self.player_2
+                    first_player = player
+
+                else:
+                    if first_player == self.player_1:
+                        player = self.player_2
+                        first_player = player
+
+                    elif first_player == self.player_2:
+                        player = self.player_1
+                        first_player = player
+
                 result = self.play(player)
                 if result == 1:
                     win += 1
