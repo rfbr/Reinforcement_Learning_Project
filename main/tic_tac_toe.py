@@ -29,8 +29,7 @@ class TicTacToe:
             abs_sum = abs(sum([self.board[i, i] for i in range(3)]))
             if abs_sum == 3:
                 return player
-        if position[0] == (2 - position[1]) or position[1] == (2 -
-                                                               position[0]):
+        if position[0] == (2 - position[1]) or position[1] == (2 - position[0]):
             abs_sum = abs(sum([self.board[i, 2 - i] for i in range(3)]))
             if abs_sum == 3:
                 return player
@@ -73,12 +72,16 @@ class TicTacToe:
 
     def display_results(self, win, tie, loss):
         name_1 = self.player_1.__class__.__name__ + ', eps=' + \
-            str(self.player_1.epsilon) if self.player_1.__class__.__name__ == 'EpsGreedyAgent' else self.player_1.__class__.__name__
+            str(self.player_1.epsilon) if self.player_1.__class__.__name__ == 'EpsGreedyAgent' \
+            else self.player_1.__class__.__name__
         name_2 = self.player_2.__class__.__name__ + ', eps=' + \
-            str(self.player_2.epsilon) if self.player_2.__class__.__name__ == 'EpsGreedyAgent' else self.player_2.__class__.__name__
+            str(self.player_2.epsilon) if self.player_2.__class__.__name__ == 'EpsGreedyAgent' \
+            else self.player_2.__class__.__name__
 
-        str_1 = f'|Player 1: {name_1}'+' '*(30 - len(name_1))+'|'+f'{win}'+' '*(10-len(str(win)))+'|'+f'{tie}'+' '*(10-len(str(tie)))+'|'+f'{loss}'+' '*(10-len(str(loss)))+'|'
-        str_2 = f'|Player 2: {name_2}'+' '*(30 - len(name_2))+'|'+f'{loss}'+' '*(10-len(str(loss)))+'|'+f'{tie}'+' '*(10-len(str(tie)))+'|'+f'{win}'+' '*(10-len(str(win)))+'|'
+        str_1 = f'|Player 1: {name_1}' + ' '*(30 - len(name_1)) + '|' + f'{win}' + ' '*(10-len(str(win))) + '|' + \
+                f'{tie}' + ' '*(10-len(str(tie))) + '|' + f'{loss}' + ' '*(10-len(str(loss))) + '|'
+        str_2 = f'|Player 2: {name_2}' + ' '*(30 - len(name_2)) + '|' + f'{loss}' + ' '*(10-len(str(loss))) + '|' + \
+                f'{tie}' + ' '*(10-len(str(tie))) + '|' + f'{win}' + ' '*(10-len(str(win))) + '|'
         n = max(len(str_1), len(str_2))
         print('-'*n)
         print('|Agent    ' + ' '*30 + ' |Win       |Draw      |Loss      |')
@@ -93,7 +96,7 @@ class TicTacToe:
         self.update_board(player.name, action)
         player.states.append(self.board_to_text())
         win_or_draw = self.check_win(player.name, action)
-        self.display_board()
+        # self.display_board()
         if abs(win_or_draw) in (0, 1):
             self.give_reward(win_or_draw)
             self.player_1.clear_states()
@@ -103,46 +106,40 @@ class TicTacToe:
         return None
 
     def train(self, nb_games):
+        players = {
+            0: self.player_1,
+            1: self.player_2
+        }
         for _ in tqdm(range(nb_games)):
-            first_player = 0
+            first_play = True
+            i = 0
             while True:
-                if first_player ==0:
-                        player = self.player_1 if np.random.rand() < .5 else self.player_2
-                        first_player = player
-    
+                if first_play:
+                    player = int(np.random.rand() < .5)
+                    first_play = False
                 else:
-                    if first_player == self.player_1:
-                        player = self.player_2
-                        first_player = player
-    
-                    elif first_player == self.player_2:
-                        player = self.player_1
-                        first_player = player
-    
-                result = self.play(player)
-                if result in [0,1,-1]:
+                    i += 1
+                ind = (i + player) % 2
+                result = self.play(players[ind])
+                if result in [-1, 0, 1]:
                     break
-            
 
     def simulation(self, nb_games):
         win, draw, loss = 0, 0, 0
+        players = {
+            0: self.player_1,
+            1: self.player_2
+        }
         for _ in tqdm(range(nb_games)):
-            first_player = 0 
+            first_play = True
+            i = 0
             while True:
-                if first_player ==0:
-                    player = self.player_1 if np.random.rand() < .5 else self.player_2
-                    first_player = player
-
+                if first_play:
+                    player = int(np.random.rand() < .5)
+                    first_play = False
                 else:
-                    if first_player == self.player_1:
-                        player = self.player_2
-                        first_player = player
-
-                    elif first_player == self.player_2:
-                        player = self.player_1
-                        first_player = player
-
-                result = self.play(player)
+                    i += 1
+                result = self.play(players[(i + player) % 2])
                 if result == 1:
                     win += 1
                     break
