@@ -1,3 +1,6 @@
+"""
+Implements the epsilon-greedy
+"""
 import numpy as np
 import random
 from copy import deepcopy

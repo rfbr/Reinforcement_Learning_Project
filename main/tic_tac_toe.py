@@ -1,3 +1,6 @@
+"""
+Implements the tic-tac-toe game
+"""
 import numpy as np
 from tqdm import tqdm
 
@@ -150,3 +153,5 @@ class TicTacToe:
                     loss += 1
                     break
         self.display_results(win, draw, loss)
+
+
