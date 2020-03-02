@@ -47,13 +47,13 @@ class TicTacToe:
     def give_reward(self, result):
         if result == 1:
             self.player_1.reward(1)
-            self.player_2.reward(0)
+            self.player_2.reward(-1)
         elif result == -1:
-            self.player_1.reward(0)
+            self.player_1.reward(-1)
             self.player_2.reward(1)
         else:
-            self.player_1.reward(.5)
-            self.player_2.reward(.5)
+            self.player_1.reward(0.5)
+            self.player_2.reward(0.5)
 
     def clear_board(self):
         self.board = np.zeros((3, 3))
@@ -74,17 +74,12 @@ class TicTacToe:
         print('-------------')
 
     def display_results(self, win, tie, loss):
-        name_1 = self.player_1.__class__.__name__ + ', eps=' + \
-            str(self.player_1.epsilon) if self.player_1.__class__.__name__ == 'EpsGreedyAgent' \
-            else self.player_1.__class__.__name__
-        name_2 = self.player_2.__class__.__name__ + ', eps=' + \
-            str(self.player_2.epsilon) if self.player_2.__class__.__name__ == 'EpsGreedyAgent' \
-            else self.player_2.__class__.__name__
-
-        str_1 = f'|Player 1: {name_1}' + ' '*(30 - len(name_1)) + '|' + f'{win}' + ' '*(10-len(str(win))) + '|' + \
-                f'{tie}' + ' '*(10-len(str(tie))) + '|' + f'{loss}' + ' '*(10-len(str(loss))) + '|'
-        str_2 = f'|Player 2: {name_2}' + ' '*(30 - len(name_2)) + '|' + f'{loss}' + ' '*(10-len(str(loss))) + '|' + \
-                f'{tie}' + ' '*(10-len(str(tie))) + '|' + f'{win}' + ' '*(10-len(str(win))) + '|'
+        str_1 = f'|Player 1: {self.player_1.display_name}' + ' '*(30 - len(self.player_1.display_name)) + '|' + \
+                f'{win}' + ' '*(10-len(str(win))) + '|' + f'{tie}' + ' '*(10-len(str(tie))) + '|' + f'{loss}' + \
+                ' '*(10-len(str(loss))) + '|'
+        str_2 = f'|Player 2: {self.player_2.display_name}' + ' '*(30 - len(self.player_2.display_name)) + '|' + \
+                f'{loss}' + ' '*(10-len(str(loss))) + '|' + f'{tie}' + ' '*(10-len(str(tie))) + '|' + f'{win}' + \
+                ' '*(10-len(str(win))) + '|'
         n = max(len(str_1), len(str_2))
         print('-'*n)
         print('|Agent    ' + ' '*30 + ' |Win       |Draw      |Loss      |')
@@ -94,14 +89,15 @@ class TicTacToe:
         print(str_2)
         print('-'*n)
 
-    def play(self, player):
+    def play(self, player, training=False):
         action = player.action(self)
         self.update_board(player.name, action)
         player.states.append(self.board_to_text())
         win_or_draw = self.check_win(player.name, action)
         # self.display_board()
         if abs(win_or_draw) in (0, 1):
-            self.give_reward(win_or_draw)
+            if training:
+                self.give_reward(win_or_draw)
             self.player_1.clear_states()
             self.player_2.clear_states()
             self.clear_board()
@@ -123,7 +119,7 @@ class TicTacToe:
                 else:
                     i += 1
                 ind = (i + player) % 2
-                result = self.play(players[ind])
+                result = self.play(players[ind], True)
                 if result in [-1, 0, 1]:
                     break
 
@@ -153,5 +149,3 @@ class TicTacToe:
                     loss += 1
                     break
         self.display_results(win, draw, loss)
-
-

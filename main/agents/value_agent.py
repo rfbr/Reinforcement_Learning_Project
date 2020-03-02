@@ -5,13 +5,13 @@ from numpy import random
 
 
 class ValueAgent:
-    def __init__(self, name, epsilon, alpha=0.8, decay_gamma=0.9):
+    def __init__(self, name, epsilon):
         self.name = name
         self.epsilon = epsilon
         self.states = []
         self.learning_rate = 0.2
-        self.decay_gamma = decay_gamma
-        self.alpha = alpha
+        self.decay_gamma = 0.9
+        self.alpha = 0.8
         self.old_state = None
         self.old_action = None
         self.new_state = None

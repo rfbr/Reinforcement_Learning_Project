@@ -1,10 +1,14 @@
 """
 Implements the Q-Learning
 """
-from main.agents import value_agent
+from main.agents.value_agent import ValueAgent
 
 
-class QLearning(value_agent.ValueAgent):
+class QLearning(ValueAgent):
+    def __init__(self, name, epsilon):
+        ValueAgent.__init__(self, name, epsilon)
+        self.display_name = 'QLearning, epsilon = ' + str(epsilon)
+
     def update_Q(self, state, action, state_, action_, reward):
         if not state:
             return

@@ -10,6 +10,7 @@ import pickle
 class EpsGreedyAgent:
     def __init__(self, name, epsilon):
         self.name = name
+        self.display_name = 'EpsGreedyAgent, epsilon = ' + str(epsilon)
         self.epsilon = epsilon
         self.states = []
         self.learning_rate = 0.2
@@ -18,7 +19,7 @@ class EpsGreedyAgent:
 
     def action(self, board):
         positions = board.get_available_positions()
-        if np.random.rand() <= self.epsilon:
+        if random.random() < self.epsilon:
             action = random.choice(positions)
         else:
             max_value = np.NINF

@@ -1,10 +1,14 @@
 """
 Implements the SARSA
 """
-from main.agents import value_agent
+from main.agents.value_agent import ValueAgent
 
 
-class SARSA(value_agent.ValueAgent):
+class SARSA(ValueAgent):
+    def __init__(self, name, epsilon):
+        ValueAgent.__init__(self, name, epsilon)
+        self.display_name = 'SARSA, epsilon = ' + str(epsilon)
+
     def update_Q(self, state, action, state_, action_, reward):
         if not state:
             return
