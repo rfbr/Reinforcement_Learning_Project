@@ -2,6 +2,7 @@ import os
 from main.agents.eps_greedy import EpsGreedyAgent
 from main.agents.sarsa import SARSA
 from main.agents.q_learning import QLearning
+from main.agents.expected_sarsa import ExpectedSARSA
 from main.tic_tac_toe import TicTacToe
 
 if __name__ == '__main__':
@@ -15,8 +16,9 @@ if __name__ == '__main__':
         - 1 to play with the epsilon-greedy algorithm;
         - 2 to play with the SARSA algorithm;
         - 3 to play with the Q Learning algorithm.
+        - 4 to play with the Expected SARSA algorithm.
         '''
-            possible_choices = [0, 1, 2, 3]
+            possible_choices = [0, 1, 2, 3, 4]
 
             # -- Choices of players agents
             while True:
@@ -95,6 +97,21 @@ if __name__ == '__main__':
                 players[1] = QLearning(name=1, epsilon=eps_1)
                 p1_need_training = True
                 env1 = TicTacToe(players[1], QLearning(name=-1, epsilon=eps_1))
+            # Expected SARSA algorithm
+            if player_1_value == 4:
+                os.system('clear')
+                while True:
+                    try:
+                        eps_1 = float(input('Player 1: ExpectedSARSA epsilon value?\n'))
+                        if eps_1 < 0 or eps_1 > 1:
+                            raise ValueError
+                        else:
+                            break
+                    except ValueError:
+                        print('Epsilon must be in [0,1]')
+                players[1] = ExpectedSARSA(name=1, epsilon=eps_1)
+                p1_need_training = True
+                env1 = TicTacToe(players[1], ExpectedSARSA(name=-1, epsilon=eps_1))
             # - Player 2
             # Random algorithm
             if player_2_value == 0:
@@ -149,7 +166,22 @@ if __name__ == '__main__':
                 players[2] = QLearning(name=-1, epsilon=eps_2)
                 p2_need_training = True
                 env2 = TicTacToe(QLearning(name=1, epsilon=eps_2), players[2])
-
+            # Expected SARSA algorithm
+            if player_2_value == 4:
+                os.system('clear')
+                while True:
+                    try:
+                        eps_2 = float(input('Player 2: ExpectedSARSA epsilon value?\n'))
+                        if eps_2 < 0 or eps_2 > 1:
+                            raise ValueError
+                        else:
+                            break
+                    except ValueError:
+                        print('Epsilon must be in [0,1]')
+                players[2] = ExpectedSARSA(name=-1, epsilon=eps_2)
+                p2_need_training = True
+                env2 = TicTacToe(ExpectedSARSA(name=1, epsilon=eps_2), players[2])
+                
             # -- Number of game to play
             os.system('clear')
             while True:
@@ -179,9 +211,9 @@ if __name__ == '__main__':
 
         # -- Playing
         print("Playing games...")
-        if player_1_value in [1, 2, 3]:
+        if player_1_value in [1, 2, 3, 4]:
             players[1].epsilon = 0
-        if player_2_value in [1, 2, 3]:
+        if player_2_value in [1, 2, 3, 4]:
             players[2].epsilon = 0
         environment = TicTacToe(players[1], players[2])
         environment.simulation(nb_games)
