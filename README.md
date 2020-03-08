@@ -24,7 +24,7 @@ The file `__main__.py` is the main program and is used to launch a competition o
 
 Then, the user selects a second player and decides the hyperparameters of both chosen agents (for instance the value of epsilon for the SARSA). Finally, the user is asked the number of games of the competition.
 
-Before playing the games, _SARSA_, _Expected SARSA_, _Q-Learning_ and _epsilon-greedy_ agents have to perform a training phase composed of several games of self-play (we set in to 2000). As _epsilon-greedy_ takes a lot of time to train, its optimal policy at the end of the training is stored in the `policies` folder to avoid future training of this agent with the same epsilon parameter. **AlphaZero** is pre-trained, as its training take several hours to ensure good performances (the best model we got is store in the `/agents/alphazero/data/model_data`).
+Before playing the games, _SARSA_, _Expected SARSA_, _Q-Learning_ and _epsilon-greedy_ agents have to perform a training phase composed of several games of self-play (we set in to 2000). As _epsilon-greedy_ takes a lot of time to train, its optimal policy at the end of the training is stored in the `policies` folder to avoid future training of this agent with the same epsilon parameter. **AlphaZero** is pre-trained, as its training take several hours to ensure good performances (the best model we got is stored in the `/agents/alphazero/data/model_data`).
 
 The results of the competition between the two trained agents is of the form (for 100 games):
 
