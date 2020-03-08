@@ -39,6 +39,7 @@ in the case of good algorithms.
 
 The folder `agents` contains all the tic-tac-toe algorithms that we implemented. _SARSA_, _Expected SARSA_, _Q-Learning_ come from the same base agent `value_agent.py` as their algorithm relies on the value function.
 
+## Usage
 To launch the program, open a terminal and run from the root directory:
 ```
 python -m main
@@ -53,3 +54,8 @@ python -m main.agents.alphazero.main
 ![qlearning](https://user-images.githubusercontent.com/45492759/76167255-95bcf000-6165-11ea-887f-0c0857eb6962.png)
 ![sarsa](https://user-images.githubusercontent.com/45492759/76167256-9786b380-6165-11ea-9ce0-0a1ed659f277.png)
 ![expectedsarsa](https://user-images.githubusercontent.com/45492759/76167257-99507700-6165-11ea-879f-9bb09033b352.png)
+
+## Credits
+https://github.com/plkmo/AlphaZero_Connect4
+
+https://github.com/spranesh/RL-TicTacToe
