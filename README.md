@@ -11,7 +11,7 @@ As in the article [Silver, Hubert, et al. "Mastering Chess and Shogi by Self-Pla
 *CoRR,abs/1712.01815.* (2017)](http://arxiv.org/abs/1712.01815), our idea is to compare the performances of several algorithms playing tic-tac-toe and to show that **AlphaZero** outperforms all of them.
 
 
-The file `tic_tac_toe.py` contains the environment of the game and allows an algorithm to train using self-play or to play against another agent.
+The file `tic_tac_toe.py` in the `env` folder contains the environment of the game and allows an algorithm to train using self-play or to play against another agent.
 
 The file `__main__.py` is the main program and is used to launch a competition of several games between two agents. Once a competition is launched, the user is asked to chose the player 1 among the following agents:
 
@@ -34,10 +34,15 @@ The results of the competition between the two trained agents is of the form (fo
 | Player 2: Any other agent   | 0   | 100  | 0    |
 
 in the case of good algorithms.
+**NB:** AlphaZero games take time even if we limited the MCTS simulation to 100 iterations
 
 The folder `agents` contains all the tic-tac-toe algorithms that we implemented. _SARSA_, _Expected SARSA_, _Q-Learning_ come from the same base agent `value_agent.py` as their algorithm relies on the value function.
 
 To launch the program, open a terminal and run from the root directory:
 ```
 python -m main
+``` 
+To train the AlphaZero net (with all the parameters hard coded), open a terminal and run from the root directory:
+```
+python -m main.agents.alphazero.main
 ``` 
