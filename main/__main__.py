@@ -1,9 +1,11 @@
 import os
+import torch
 from main.agents.eps_greedy import EpsGreedyAgent
 from main.agents.sarsa import SARSA
 from main.agents.q_learning import QLearning
 from main.agents.expected_sarsa import ExpectedSARSA
-from main.tic_tac_toe import TicTacToe
+from main.env.tic_tac_toe import TicTacToe
+from main.agents.alphazero.net import Net
 
 if __name__ == '__main__':
     players = {}
@@ -17,13 +19,16 @@ if __name__ == '__main__':
         - 2 to play with the SARSA algorithm;
         - 3 to play with the Q Learning algorithm.
         - 4 to play with the Expected SARSA algorithm.
+        - 5 to play with the AlphaZero algorithm.
         '''
-            possible_choices = [0, 1, 2, 3, 4]
+            possible_choices = [0, 1, 2, 3, 4, 5]
 
             # -- Choices of players agents
             while True:
                 try:
-                    player_1_value = int(input("Choose player 1 agent:" + possible_agents + "\n"))
+                    player_1_value = int(
+                        input("Choose player 1 agent:" + possible_agents +
+                              "\n"))
                     if player_1_value not in possible_choices:
                         raise ValueError
                     else:
@@ -32,7 +37,9 @@ if __name__ == '__main__':
                     print('Player 1 agent must be in ', possible_choices)
             while True:
                 try:
-                    player_2_value = int(input("Choose player 2 agent:" + possible_agents + "\n"))
+                    player_2_value = int(
+                        input("Choose player 2 agent:" + possible_agents +
+                              "\n"))
                     if player_2_value not in possible_choices:
                         raise ValueError
                     else:
@@ -53,17 +60,21 @@ if __name__ == '__main__':
                 os.system('clear')
                 while True:
                     try:
-                        eps_1 = float(input('Player 1: EpsGreedy epsilon value?\n'))
+                        eps_1 = float(
+                            input('Player 1: EpsGreedy epsilon value?\n'))
                         if eps_1 < 0 or eps_1 >= 1:
                             raise ValueError
                         else:
                             players[1] = EpsGreedyAgent(name=1, epsilon=eps_1)
                             p1_policy_name = 'p1_epsilon_' + str(eps_1)
                             try:
-                                players[1].load_policy("main/policies/" + p1_policy_name)
+                                players[1].load_policy("main/policies/" +
+                                                       p1_policy_name)
                             except (OSError, IOError) as e:
                                 p1_need_training = True
-                                env1 = TicTacToe(players[1], EpsGreedyAgent(name=-1, epsilon=eps_1))
+                                env1 = TicTacToe(
+                                    players[1],
+                                    EpsGreedyAgent(name=-1, epsilon=eps_1))
                             break
                     except ValueError:
                         print('Epsilon must be in [0,1[')
@@ -72,7 +83,8 @@ if __name__ == '__main__':
                 os.system('clear')
                 while True:
                     try:
-                        eps_1 = float(input('Player 1: SARSA epsilon value?\n'))
+                        eps_1 = float(
+                            input('Player 1: SARSA epsilon value?\n'))
                         if eps_1 < 0 or eps_1 > 1:
                             raise ValueError
                         else:
@@ -87,7 +99,8 @@ if __name__ == '__main__':
                 os.system('clear')
                 while True:
                     try:
-                        eps_1 = float(input('Player 1: QLearning epsilon value?\n'))
+                        eps_1 = float(
+                            input('Player 1: QLearning epsilon value?\n'))
                         if eps_1 < 0 or eps_1 > 1:
                             raise ValueError
                         else:
@@ -102,7 +115,8 @@ if __name__ == '__main__':
                 os.system('clear')
                 while True:
                     try:
-                        eps_1 = float(input('Player 1: ExpectedSARSA epsilon value?\n'))
+                        eps_1 = float(
+                            input('Player 1: ExpectedSARSA epsilon value?\n'))
                         if eps_1 < 0 or eps_1 > 1:
                             raise ValueError
                         else:
@@ -111,7 +125,19 @@ if __name__ == '__main__':
                         print('Epsilon must be in [0,1]')
                 players[1] = ExpectedSARSA(name=1, epsilon=eps_1)
                 p1_need_training = True
-                env1 = TicTacToe(players[1], ExpectedSARSA(name=-1, epsilon=eps_1))
+                env1 = TicTacToe(players[1],
+                                 ExpectedSARSA(name=-1, epsilon=eps_1))
+            # AlphaZero algorithm
+            if player_1_value == 5:
+                net = Net(name=1)
+                if torch.cuda.is_available():
+                    net.cuda()
+                net.eval()
+                best_net = './main/agents/alphazero/data/model_data/BestNet.pt'
+                checkpoint = torch.load(best_net)
+                net.load_state_dict(checkpoint['state_dict'])
+                players[1] = net
+                p1_need_training = False
             # - Player 2
             # Random algorithm
             if player_2_value == 0:
@@ -122,17 +148,21 @@ if __name__ == '__main__':
                 os.system('clear')
                 while True:
                     try:
-                        eps_2 = float(input('Player 2: EpsGreedy epsilon value?\n'))
+                        eps_2 = float(
+                            input('Player 2: EpsGreedy epsilon value?\n'))
                         if eps_2 < 0 or eps_2 >= 1:
                             raise ValueError
                         else:
                             players[2] = EpsGreedyAgent(name=-1, epsilon=eps_2)
                             p2_policy_name = 'p2_epsilon_' + str(eps_2)
                             try:
-                                players[2].load_policy("main/policies/" + p2_policy_name)
+                                players[2].load_policy("main/policies/" +
+                                                       p2_policy_name)
                             except (OSError, IOError) as e:
                                 p2_need_training = True
-                                env2 = TicTacToe(EpsGreedyAgent(name=1, epsilon=eps_2), players[2])
+                                env2 = TicTacToe(
+                                    EpsGreedyAgent(name=1, epsilon=eps_2),
+                                    players[2])
                             break
                     except ValueError:
                         print('Epsilon must be in [0,1[')
@@ -141,7 +171,8 @@ if __name__ == '__main__':
                 os.system('clear')
                 while True:
                     try:
-                        eps_2 = float(input('Player 2: SARSA epsilon value?\n'))
+                        eps_2 = float(
+                            input('Player 2: SARSA epsilon value?\n'))
                         if eps_2 < 0 or eps_2 > 1:
                             raise ValueError
                         else:
@@ -156,7 +187,8 @@ if __name__ == '__main__':
                 os.system('clear')
                 while True:
                     try:
-                        eps_2 = float(input('Player 2: QLearning epsilon value?\n'))
+                        eps_2 = float(
+                            input('Player 2: QLearning epsilon value?\n'))
                         if eps_2 < 0 or eps_2 > 1:
                             raise ValueError
                         else:
@@ -171,7 +203,8 @@ if __name__ == '__main__':
                 os.system('clear')
                 while True:
                     try:
-                        eps_2 = float(input('Player 2: ExpectedSARSA epsilon value?\n'))
+                        eps_2 = float(
+                            input('Player 2: ExpectedSARSA epsilon value?\n'))
                         if eps_2 < 0 or eps_2 > 1:
                             raise ValueError
                         else:
@@ -180,13 +213,26 @@ if __name__ == '__main__':
                         print('Epsilon must be in [0,1]')
                 players[2] = ExpectedSARSA(name=-1, epsilon=eps_2)
                 p2_need_training = True
-                env2 = TicTacToe(ExpectedSARSA(name=1, epsilon=eps_2), players[2])
-                
+                env2 = TicTacToe(ExpectedSARSA(name=1, epsilon=eps_2),
+                                 players[2])
+            # AlphaZero algorithm
+            if player_1_value == 5:
+                net = Net(name=1)
+                if torch.cuda.is_available():
+                    net.cuda()
+                net.eval()
+                best_net = './main/agents/alphazero/data/model_data/BestNet.pt'
+                checkpoint = torch.load(best_net)
+                net.load_state_dict(checkpoint['state_dict'])
+                players[1] = net
+                p1_need_training = False
+
             # -- Number of game to play
             os.system('clear')
             while True:
                 try:
-                    nb_games = int(input('How many games you want them to play?\n'))
+                    nb_games = int(
+                        input('How many games you want them to play?\n'))
                     if nb_games <= 0:
                         raise ValueError
                     else:

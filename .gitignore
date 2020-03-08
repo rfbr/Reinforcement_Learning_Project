@@ -1,3 +1,6 @@
 *.pyc
 *.pyo
 __pycache__/ 
+/agents/alphazero/data/datasets
+/agents/alphazero/data/model_data/AlphaZero*
+settings.json
