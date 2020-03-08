@@ -216,15 +216,15 @@ if __name__ == '__main__':
                 env2 = TicTacToe(ExpectedSARSA(name=1, epsilon=eps_2),
                                  players[2])
             # AlphaZero algorithm
-            if player_1_value == 5:
-                net = Net(name=1)
+            if player_2_value == 5:
+                net = Net(name=-1)
                 if torch.cuda.is_available():
                     net.cuda()
                 net.eval()
                 best_net = './main/agents/alphazero/data/model_data/BestNet.pt'
                 checkpoint = torch.load(best_net)
                 net.load_state_dict(checkpoint['state_dict'])
-                players[1] = net
+                players[2] = net
                 p1_need_training = False
 
             # -- Number of game to play
