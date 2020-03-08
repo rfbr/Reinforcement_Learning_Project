@@ -34,6 +34,7 @@ The results of the competition between the two trained agents is of the form (fo
 | Player 2: Any other agent   | 0   | 100  | 0    |
 
 in the case of good algorithms.
+
 **NB:** AlphaZero games take time even if we limited the MCTS simulation to 100 iterations
 
 The folder `agents` contains all the tic-tac-toe algorithms that we implemented. _SARSA_, _Expected SARSA_, _Q-Learning_ come from the same base agent `value_agent.py` as their algorithm relies on the value function.
