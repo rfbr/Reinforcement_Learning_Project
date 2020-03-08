@@ -11,7 +11,7 @@ As in the article [Silver, Hubert, et al. "Mastering Chess and Shogi by Self-Pla
 *CoRR,abs/1712.01815.* (2017)](http://arxiv.org/abs/1712.01815), our idea is to compare the performances of several algorithms playing tic-tac-toe and to show that **AlphaZero** outperforms all of them.
 
 
-The file `tic_tac_toe.py` contains the environment of the game and allows an algorithm to train using self-play or to play against another agent.
+The file `tic_tac_toe.py` in the `env` folder contains the environment of the game and allows an algorithm to train using self-play or to play against another agent.
 
 The file `__main__.py` is the main program and is used to launch a competition of several games between two agents. Once a competition is launched, the user is asked to chose the player 1 among the following agents:
 
@@ -24,7 +24,7 @@ The file `__main__.py` is the main program and is used to launch a competition o
 
 Then, the user selects a second player and decides the hyperparameters of both chosen agents (for instance the value of epsilon for the SARSA). Finally, the user is asked the number of games of the competition.
 
-Before playing the games, _SARSA_, _Expected SARSA_, _Q-Learning_ and _epsilon-greedy_ agents have to perform a training phase composed of several games of self-play (we set in to 2000). As _epsilon-greedy_ takes a lot of time to train, its optimal policy at the end of the training is stored in the `policies` folder to avoid future training of this agent with the same epsilon parameter. **AlphaZero** is pre-trained, as its training take several hours to ensure good performances.
+Before playing the games, _SARSA_, _Expected SARSA_, _Q-Learning_ and _epsilon-greedy_ agents have to perform a training phase composed of several games of self-play (we set in to 2000). As _epsilon-greedy_ takes a lot of time to train, its optimal policy at the end of the training is stored in the `policies` folder to avoid future training of this agent with the same epsilon parameter. **AlphaZero** is pre-trained, as its training take several hours to ensure good performances (the best model we got is stored in the `/agents/alphazero/data/model_data` folder).
 
 The results of the competition between the two trained agents is of the form (for 100 games):
 
@@ -35,9 +35,15 @@ The results of the competition between the two trained agents is of the form (fo
 
 in the case of good algorithms.
 
+**NB:** AlphaZero games take time even if we limited the MCTS simulation to 100 iterations
+
 The folder `agents` contains all the tic-tac-toe algorithms that we implemented. _SARSA_, _Expected SARSA_, _Q-Learning_ come from the same base agent `value_agent.py` as their algorithm relies on the value function.
 
 To launch the program, open a terminal and run from the root directory:
 ```
 python -m main
+``` 
+To train the AlphaZero net (with all the parameters hard coded), open a terminal and run from the root directory:
+```
+python -m main.agents.alphazero.main
 ``` 
