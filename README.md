@@ -1,4 +1,4 @@
-# Reinforcement Learning
+# Reinforcement Learning Project
 
 >**Emma DEMARECAUX - Charles DESALEUX - Romain FABRE**
 ************************
@@ -35,7 +35,7 @@ The results of the competition between the two trained agents is of the form (fo
 
 in the case of good algorithms.
 
-**NB:** AlphaZero games take time even if we limited the MCTS simulation to 100 iterations
+**NB:** AlphaZero games take time even if we limited the MCTS simulation to 100 iterations, you might change this value if it takes to long to compute at the cost of lower performance.
 
 The folder `agents` contains all the tic-tac-toe algorithms that we implemented. _SARSA_, _Expected SARSA_, _Q-Learning_ come from the same base agent `value_agent.py` as their algorithm relies on the value function.
 
@@ -47,3 +47,9 @@ To train the AlphaZero net (with all the parameters hard coded), open a terminal
 ```
 python -m main.agents.alphazero.main
 ``` 
+## Results
+![random](https://user-images.githubusercontent.com/45492759/76167251-8fc70f00-6165-11ea-892c-48d41a51f3c6.png)
+![eps](https://user-images.githubusercontent.com/45492759/76167254-935a9600-6165-11ea-99d1-261e0dd46aa0.png)
+![qlearning](https://user-images.githubusercontent.com/45492759/76167255-95bcf000-6165-11ea-887f-0c0857eb6962.png)
+![sarsa](https://user-images.githubusercontent.com/45492759/76167256-9786b380-6165-11ea-9ce0-0a1ed659f277.png)
+![expectedsarsa](https://user-images.githubusercontent.com/45492759/76167257-99507700-6165-11ea-879f-9bb09033b352.png)
