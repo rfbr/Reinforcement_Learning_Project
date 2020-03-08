@@ -134,7 +134,7 @@ if __name__ == '__main__':
                     net.cuda()
                 net.eval()
                 best_net = './main/agents/alphazero/data/model_data/BestNet.pt'
-                checkpoint = torch.load(best_net)
+                checkpoint = torch.load(best_net, map_location='cpu')
                 net.load_state_dict(checkpoint['state_dict'])
                 players[1] = net
                 p1_need_training = False
@@ -222,7 +222,7 @@ if __name__ == '__main__':
                     net.cuda()
                 net.eval()
                 best_net = './main/agents/alphazero/data/model_data/BestNet.pt'
-                checkpoint = torch.load(best_net)
+                checkpoint = torch.load(best_net, map_location='cpu')
                 net.load_state_dict(checkpoint['state_dict'])
                 players[2] = net
                 p1_need_training = False
