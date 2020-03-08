@@ -63,7 +63,7 @@ class PolicyOutputBlock(nn.Module):
 
 
 class ValueOutputBlock(nn.Module):
-    def __init__(self, n0, n1, kernel_size=1, padding=1):
+    def __init__(self, n0, n1):
         super(ValueOutputBlock, self).__init__()
         self.conv = nn.Conv2d(n0, n1, kernel_size=1)
         self.bn = nn.BatchNorm2d(n1)
