@@ -9,7 +9,6 @@ class ValueAgent:
         self.name = name
         self.epsilon = epsilon
         self.states = []
-        self.learning_rate = 0.2
         self.decay_gamma = 0.9
         self.alpha = 0.8
         self.old_state = None
