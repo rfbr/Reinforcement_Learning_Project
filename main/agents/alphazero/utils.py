@@ -20,7 +20,7 @@ class board_data(Dataset):
 def load_state(net, iteration):
     base_path = "./model_data/"
     checkpoint_path = os.path.join(base_path,
-                                   "AlphaZero_iter%d.pt" % (iteration))
+                                   "AlphaZero_iter%d.pt" % iteration)
     start_epoch, checkpoint = 0, None
     if os.path.isfile(checkpoint_path):
         checkpoint = torch.load(checkpoint_path)

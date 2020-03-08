@@ -14,7 +14,7 @@ if __name__ == '__main__':
         if i >= 1:
             winner = evaluate_nets(i, i + 1)
             counts = 0
-            while (winner != (i + 1)):
+            while winner != (i + 1):
                 run_mcts(game_per_mcts, (counts + 1) * game_per_mcts, i)
                 counts += 1
                 train_net(batch_size=batch_size, epochs=epochs, iteration=i)

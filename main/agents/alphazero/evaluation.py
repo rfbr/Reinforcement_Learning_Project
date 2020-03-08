@@ -54,23 +54,20 @@ class EvaluationEnv(TicTacToe):
             current = -1
             player = -1
 
-        while endgame == False:
-
+        while not endgame:
             if player == 1:
                 root = mcts_simulation(self, 200, one_player, player)
                 policy = compute_policy(root)
             else:
                 root = mcts_simulation(self, 200, minus_one_player, player)
                 policy = compute_policy(root)
-            move = np.random.choice(np.array([0, 1, 2, 3, 4, 5, 6, 7, 8]),
-                                    1,
-                                    p=policy)
+            move = np.random.choice(np.array([0, 1, 2, 3, 4, 5, 6, 7, 8]), 1, p=policy)
             move = (move // 3, move % 3)
             self.update_board(player, move)
             win_or_draw = self.check_win(player, move)
             player *= -1
             if abs(win_or_draw) in (0, 1):
-                value = win_or_draw * current  #1 if current net wins
+                value = win_or_draw * current  # 1 if current net wins
                 self.clear_board()
                 endgame = True
         return value

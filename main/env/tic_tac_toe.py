@@ -95,7 +95,6 @@ class TicTacToe:
         self.update_board(player.name, action)
         player.states.append(self.board_to_text())
         win_or_draw = self.check_win(player.name, action)
-        # self.display_board()
         if abs(win_or_draw) in (0, 1):
             if training:
                 self.give_reward(win_or_draw)

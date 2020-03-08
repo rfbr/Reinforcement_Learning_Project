@@ -17,8 +17,8 @@ if __name__ == '__main__':
         - 0 to play with the random algorithm;
         - 1 to play with the epsilon-greedy algorithm;
         - 2 to play with the SARSA algorithm;
-        - 3 to play with the Q Learning algorithm.
-        - 4 to play with the Expected SARSA algorithm.
+        - 3 to play with the Q Learning algorithm;
+        - 4 to play with the Expected SARSA algorithm;
         - 5 to play with the AlphaZero algorithm.
         '''
             possible_choices = [0, 1, 2, 3, 4, 5]

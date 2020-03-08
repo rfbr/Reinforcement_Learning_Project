@@ -114,9 +114,7 @@ class Net(nn.Module):
     def action(self, board):
         root = mcsts.mcts_simulation(board, 100, self, self.name)
         policy = mcsts.compute_policy(root)
-        move = np.random.choice(np.array([0, 1, 2, 3, 4, 5, 6, 7, 8]),
-                                1,
-                                p=policy)
+        move = np.random.choice(np.array([0, 1, 2, 3, 4, 5, 6, 7, 8]), 1, p=policy)
         action = (move // 3, move % 3)
         return action
 
